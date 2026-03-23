@@ -20,7 +20,7 @@ class ApiResponse
             'status' => 'Error',
             'version' => config('app.production_version'),
             'message' => $message,
-            'data' => $errors
+            'errors' => $errors
         ], $code);
     }
 }
