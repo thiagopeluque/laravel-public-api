@@ -9,6 +9,6 @@ class MainController extends Controller
 {
     public function status()
     {
-        return ApiResponse::success([], 'API is running OK');
+        return ApiResponse::success('API is running OK');
     }
 }

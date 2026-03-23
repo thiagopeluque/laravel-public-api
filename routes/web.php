@@ -1,14 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\V1\MainController;
 use App\Services\ApiResponse;
 use Illuminate\Support\Facades\Route;
-
-// Rota de Testes da API
-Route::get('/status', [MainController::class, 'status']);
-
-// Rotas Produção API
-
 
 // Rota de Fallback (Caso não exista o Endpoint solicitado)
 Route::fallback(function () {

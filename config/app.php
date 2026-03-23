@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    # Custom Environment Constants
+    'maintenance_mode' => env('API_MAINTENANCE_MODE', false),
+    'production_version' => env('API_PRODUCTION_VERSION', 'v1')
+
 ];
