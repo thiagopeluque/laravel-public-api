@@ -125,6 +125,7 @@ return [
 
     # Custom Environment Constants
     'maintenance_mode' => env('API_MAINTENANCE_MODE', false),
-    'production_version' => env('API_PRODUCTION_VERSION', 'v1')
+    'production_version' => env('API_PRODUCTION_VERSION', 'v1'),
+    'rate_limit' => env('API_RATE_LIMIT', 0)
 
 ];
