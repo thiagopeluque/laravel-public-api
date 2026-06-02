@@ -20,4 +20,16 @@ class ProductsController extends Controller
             'total_products' => $products->count()
         ]);
     }
+
+    public function getProduct($id)
+    {
+        $product = Product::find($id);
+        if (!$product){
+            return ApiResponse::error("Product with ID {$id} not found", 404);
+        }
+
+        return ApiResponse::success([
+            'product' => new ProductResource($product)
+        ]);
+    }
 }

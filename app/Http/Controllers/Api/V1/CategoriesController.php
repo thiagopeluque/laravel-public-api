@@ -20,4 +20,16 @@ class CategoriesController extends Controller
             'total_categories' => $categories->count()
         ]);
     }
+
+    public function getCategory($id)
+    {
+        $category = Category::find($id);
+        if (!$category){
+            return ApiResponse::error("Category with ID {$id} not found", 404);
+        }
+
+        return ApiResponse::success([
+            'category' => new CategoryResource($category)
+        ]);
+    }
 }
