@@ -14,12 +14,17 @@ class CategoriesController extends Controller
 {
     public function listCategories()
     {
-        $categories = Category::all(['id','name','description']);
-        
-        // Usando o name params para usar somente um dos parâmetros da função da ApiResponse
-        return ApiResponse::success(data: [
+        $perPage = request()->input('per_page', 10);
+        $categories = Category::paginate($perPage);
+
+        return ApiResponse::success([
             'categories' => CategoryResource::collection($categories), // Usando o CategoryResource
-            'total_categories' => $categories->count()
+            'pagination' => [
+                'current_page' => $categories->currentPage(),
+                'last_page' => $categories->lastPage(),
+                'per_page' => $categories->perPage(),
+                'total' => $categories->total()
+            ]
         ]);
     }
 

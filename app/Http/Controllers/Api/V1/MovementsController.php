@@ -12,11 +12,17 @@ class MovementsController extends Controller
 {
     public function listMovements()
     {
-        $movements = Movement::with('product.category')->get();
+        $perPage = request()->input('per_page', 10);
+        $movements = Movement::with('product.category')->paginate($perPage);
 
         return ApiResponse::success([
             'movements' => MovementResource::collection($movements),
-            'totalMovements' => $movements->count()
+            'pagination' => [
+                'current_page' => $movements->currentPage(),
+                'last_page' => $movements->lastPage(),
+                'per_page' => $movements->perPage(),
+                'total' => $movements->total()
+            ]
         ]);
     }
 }

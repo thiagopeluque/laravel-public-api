@@ -4,7 +4,7 @@ namespace App\Services;
 
 class ApiResponse
 {
-    public static function success($message = 'Success', $code = 200, $data = [])
+    public static function success($data = [], $message = 'Success', $code = 200)
     {
         return response()->json([
             'version' => config('app.production_version'),
