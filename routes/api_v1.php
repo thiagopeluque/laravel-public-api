@@ -13,6 +13,7 @@ Route::get('/status', [MainController::class, 'status']);
 // Rotas Produção API
 Route::get('/categories', [CategoriesController::class, 'listCategories']);
 Route::get('/categories/{id}', [CategoriesController::class, 'getCategory']);
+Route::get('/categories/{id}/products', [CategoriesController::class, 'getProductsByCategory']);
 
 Route::get('/products', [ProductsController::class, 'listProducts']);
 Route::get('/products/{id}', [ProductsController::class, 'getProduct']);
