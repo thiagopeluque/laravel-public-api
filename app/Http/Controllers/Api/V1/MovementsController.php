@@ -13,7 +13,23 @@ class MovementsController extends Controller
     public function listMovements()
     {
         $perPage = request()->input('per_page', 10);
-        $movements = Movement::with('product.category')->paginate($perPage);
+        $allowFields = ['id','product_id','quantity','movement_type','created_at','updated_at'];
+        $allowDirections = ['asc','desc'];
+
+        $field = request()->input('field', 'id');
+        $direction = request()->input('direction','asc');
+
+        if(!in_array($field, $allowFields)){
+            return ApiResponse::error("Field not found or not permitted: {$field}");
+        }
+
+        if(!in_array($direction, $allowDirections)){
+            return ApiResponse::error("Direction not permitted: {$direction}");
+        }
+
+        $movements = Movement::with('product.category')
+                    ->orderBy($field, $direction)
+                    ->paginate($perPage);
 
         return ApiResponse::success([
             'movements' => MovementResource::collection($movements),

@@ -13,9 +13,24 @@ class ProductsController extends Controller
     public function listProducts()
     {
         $perPage = request()->input('per_page', 10);
-        $products = Product::with('category')->paginate($perPage);
+        $allowFields = ['id','name','description','category_id','created_at','updated_at'];
+        $allowDirections = ['asc','desc'];
 
-        // Usando o name params para usar somente um dos parâmetros da função da ApiResponse
+        $field = request()->input('field', 'id');
+        $direction = request()->input('direction','asc');
+
+        if(!in_array($field, $allowFields)){
+            return ApiResponse::error("Field not found or not permitted: {$field}");
+        }
+
+        if(!in_array($direction, $allowDirections)){
+            return ApiResponse::error("Direction not permitted: {$direction}");
+        }
+
+        $products = Product::with('category')
+                    ->orderBy($field, $direction)
+                    ->paginate($perPage);
+
         return ApiResponse::success(data: [
             'products' => ProductResource::collection($products), // Usando o ProductResource
             'pagination' => [
